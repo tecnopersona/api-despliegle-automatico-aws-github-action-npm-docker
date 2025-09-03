@@ -4,5 +4,8 @@ node --version
 #inicializa el proyecto de node
 npm init -y
 
-#
+#Servidor web node
 npm install express
+
+#contraseña AWS
+`SL2`r8z4Pv~94JNpu
