@@ -1,0 +1,8 @@
+#Version de node
+node --version
+
+#inicializa el proyecto de node
+npm init -y
+
+#
+npm install express
