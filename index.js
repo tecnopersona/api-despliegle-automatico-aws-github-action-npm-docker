@@ -32,7 +32,7 @@ const PORT = process.env.PORT || 8080;
 app.get('/', (req, res) => {
   // Usamos el método '.send()' del objeto 'res' para enviar una respuesta de
   // texto plano al navegador del usuario.
-  res.send('¡Hola Usuario3! Pipeline CI/CD funcionando.');
+  res.send('¡Hola Usuario prueba! Pipeline CI/CD funcionando.');
 });
 
 // --- Arranque del Servidor ---
