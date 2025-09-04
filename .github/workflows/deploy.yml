@@ -7,6 +7,8 @@ on:
 env:
   ECR_REPOSITORY: api-demo
   AWS_REGION: us-east-1
+  # AÑADE TU ALIAS DE ECR PUBLIC AQUÍ
+  ECR_PUBLIC_ALIAS: a8p9r5y8
 
 jobs:
   build-and-push:
@@ -24,20 +26,19 @@ jobs:
 
     - name: Log in to Amazon ECR Public
       uses: aws-actions/amazon-ecr-login@v1
-      # ESTA LÍNEA ES LA CORRECCIÓN. LE DA UN NOMBRE AL PASO.
       id: login-ecr-public
       with:
         registry-type: public
 
     - name: Build, tag, and push image to Amazon ECR Public
       id: build-image
-      env:
-        # Ahora esta línea sí podrá encontrar el resultado del paso anterior
-        ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:latest" >> $GITHUB_OUTPUT
+        # Construimos el nombre completo de la imagen directamente
+        IMAGE_TAG=public.ecr.aws/${{ env.ECR_PUBLIC_ALIAS }}/${{ env.ECR_REPOSITORY }}:latest
+
+        # Construimos y subimos la imagen usando el nombre completo
+        docker build -t $IMAGE_TAG .
+        docker push $IMAGE_TAG
 
   deploy:
     needs: build-and-push
